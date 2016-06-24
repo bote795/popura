@@ -23,7 +23,7 @@ const matchTitleInsideLink = /(\d+)\/(.*)/;
  * }
  *
  * @param  {str} str Link tag or RAW URL
- * @return {object|str} Object describing the link or `str` if fail to parse
+ * @return {object|str} Link model or `str` if fail to parse
  */
 export default function parseLink(str) {
 	let href;
