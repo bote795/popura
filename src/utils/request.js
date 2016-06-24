@@ -14,7 +14,7 @@ const userAgent = `popura/${pkg.version} (https://github.com/lubien/popura)`;
  * @param  {string} - Basic Authentication token
  * @param  {string} url = '/'
  * @param  {object} opts = {} - Request options
- * @return {Promise} - Resolves to the raw request body
+ * @return {Promise} - Resolves to the raw response
  */
 export function requestRaw(authToken, url = '/', opts = {}) {
 	debug(
