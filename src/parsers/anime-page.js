@@ -1,4 +1,4 @@
-import alternativeTitlesParser from './utils/alternative-titles-parser';
+import parseSidebarData from './utils/parse-sidebar-data';
 
 const animePageParser = {
 	title: 'h1',
@@ -10,10 +10,11 @@ const animePageParser = {
 		attr: 'data-src',
 	},
 
-	alternativeTitles: {
-		selector: '#content .borderClass .js-scrollfix-bottom > .spaceit_pad',
-		convert: alternativeTitlesParser,
-	},
+	alternativeTitles: parseSidebarData('Alternative Titles', 'Information'),
+
+	information: parseSidebarData('Information', 'Statistics'),
+
+	statistics: parseSidebarData('Statistics', 'google'),
 };
 
 export default animePageParser;
