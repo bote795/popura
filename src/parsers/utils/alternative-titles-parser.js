@@ -1,3 +1,5 @@
+import emptyFilter from './empty-filter';
+
 /**
  * @example
  * English: Re:ZERO -Starting Life in Another World-
@@ -17,11 +19,9 @@ export default function alternativeTitlesParser(field) {
 	const result = {};
 
 	const cleanFields = field
-		.split('\n') // Separate lines
-		.filter(
-			value => !/^\s*$/.test(value) // Remove empty
-		)
-		.map(value => value.trim()); // Trim
+		.split('\n')
+		.filter(emptyFilter)
+		.map(value => value.trim());
 
 	for (let item of cleanFields) {
 		const [, type, value] = item.match(/([a-zA-Z]+): (.*)/);
