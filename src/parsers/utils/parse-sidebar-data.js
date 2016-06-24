@@ -2,6 +2,22 @@ import cheerio from 'cheerio';
 import emptyFilter from './empty-filter';
 import parseLink from './parse-link';
 
+/**
+ * MAL's sidebar is tricky. `scrape-it` couldn't parse it easily
+ * Because of that this function will parse the RAW HTML of MAL's sidebar
+ * and return a proper key-value object of results.
+ *
+ * Note that this function defines a `start` and a `until` parameters.
+ * You can reuse it to parse: 'Alternative Title', 'Information', and
+ * 'Statistics' sections of the sidebar, just tell when they start and when
+ * they end.
+ *
+ * For an example, @see ../anime-page
+ *
+ * @param  {string} start
+ * @param  {string} until
+ * @return {object}
+ */
 export default function parseSidebarData(start, until) {
 	return {
 		selector: '#content .borderClass .js-scrollfix-bottom',
@@ -41,6 +57,16 @@ export default function parseSidebarData(start, until) {
 	};
 }
 
+/**
+ * Some props have it's value inside the same line of it's name
+ *
+ * @example
+ * isOneLiner('<span class="dark_text">English:</span> Re:ZERO -Starting Life in Another World-')
+ * true
+ *
+ * @param  {string} line
+ * @return {bool}
+ */
 function isOneLiner(line) {
 	for (let oneLiner of ['English', 'Synonyms', 'Japanese', 'Type']) {
 		if (line.includes(`${oneLiner}:`)) {
@@ -50,6 +76,20 @@ function isOneLiner(line) {
 	return false;
 }
 
+/**
+ * Some props contain comma-separated value. Just split them
+ *
+ * @example
+ * maybeSplit('english', 'Re: Life in a different world from zero, ReZero')
+ * ['Re: Life in a different world from zero', 'ReZero']
+ *
+ * maybeSplit('status', 'Currently Airing')
+ * 'Currently Airing'
+ *
+ * @param  {string} propName
+ * @param  {string} value
+ * @return {string|array}
+ */
 function maybeSplit(propName, value) {
 	if ([
 		'english', 'synonyms', 'japanese', 'producers', 'licensors', 'genres',
@@ -65,6 +105,18 @@ function maybeSplit(propName, value) {
 	return splitted;
 }
 
+/**
+ * MAL has lots of types of fields. This function will apply prop-specific
+ * parser to make our final `result` best as it can be.
+ *
+ * Note: we pass a reference to our `result` object because I've found
+ * a case where one prop contains actually 2 props, @see scoreParser()
+ *
+ * @param  {string} propName
+ * @param  {string} value
+ * @param  {object} result
+ * @return {any}
+ */
 function specialParsers(propName, value, result) {
 	const specialParsers = {
 		premieredParser, scoreParser, rankedParser, popularityParser, genresParser,
@@ -75,6 +127,14 @@ function specialParsers(propName, value, result) {
 	return value;
 }
 
+/**
+ * All fields are parsed as strings. Now it's time to change some
+ * field's types.
+ *
+ * @param  {string} propName
+ * @param  {string} value
+ * @return {string|number}
+ */
 function numericField(propName, value) {
 	if ([
 		'ratingCount', 'score', 'episodes', 'ranked', 'popularity',
@@ -87,6 +147,14 @@ function numericField(propName, value) {
 	return Number(value.split(',').join(''));
 }
 
+/**
+ * Apply our helper function defined above in our fields
+ *
+ * @param  {string} propName
+ * @param  {string} value
+ * @param  {object} result
+ * @return {any}
+ */
 function applyValueModifiers(propName, value, result) {
 	let currentValue = value;
 	for (let modifier of [
