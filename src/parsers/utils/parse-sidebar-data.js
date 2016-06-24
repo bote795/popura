@@ -1,5 +1,6 @@
 import cheerio from 'cheerio';
 import emptyFilter from './empty-filter';
+import parseLink from './parse-link';
 
 export default function parseSidebarData(start, until) {
 	return {
@@ -100,13 +101,14 @@ function applyValueModifiers(propName, value, result) {
 
 /* Special Parsers */
 
-// '<a href="http://myanimelist.net/anime/season/2016/spring">Spring 2016</a>'
+/**
+ * @example
+ * premieredParser('<a href="http://myanimelist.net/anime/season/2016/spring">Spring 2016</a>')
+ * @return Season link model
+ * @see ./parse-link
+ */
 function premieredParser(value) {
-	const $ = cheerio.load(value)('a');
-	const [, year, season] = $.attr('href').match(/\/season\/(\d+)\/(\w+)/);
-	return {
-		year, season,
-	};
+	return parseLink(value);
 }
 
 /**
@@ -143,14 +145,9 @@ function popularityParser(value) {
 /**
  * @example
  * genresParser(['<a href="/anime/genre/8/Drama" title="Drama">Drama</a>'])
- * [{id: 8, title: 'Drama'}]
+ * @return List of genre link models
+ * @see ./parse-link
  */
 function genresParser(value) {
-	return value.map(link => {
-		const $ = cheerio.load(link)('a');
-		return {
-			id: Number($.attr('href').match(/(\d+)/)[1]),
-			title: $.text(),
-		};
-	});
+	return value.map(parseLink);
 }
