@@ -1,5 +1,6 @@
 import parseSidebarData from './utils/parse-sidebar-data';
 import parseRelatedMedia from './utils/parse-related-media';
+import parsePeopleList from './utils/parse-people-list';
 
 const animePageParser = {
 	title: 'h1',
@@ -18,6 +19,10 @@ const animePageParser = {
 	statistics: parseSidebarData('Statistics', 'google'),
 
 	related: parseRelatedMedia(),
+
+	characters: parsePeopleList('Voice Actors', 'Staff', true),
+
+	staff: parsePeopleList('Staff', 'Opening Theme'),
 };
 
 export default animePageParser;
