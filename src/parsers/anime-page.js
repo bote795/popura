@@ -1,4 +1,5 @@
 import parseSidebarData from './utils/parse-sidebar-data';
+import parseRelatedMedia from './utils/parse-related-media';
 
 const animePageParser = {
 	title: 'h1',
@@ -15,6 +16,8 @@ const animePageParser = {
 	information: parseSidebarData('Information', 'Statistics'),
 
 	statistics: parseSidebarData('Statistics', 'google'),
+
+	related: parseRelatedMedia(),
 };
 
 export default animePageParser;
