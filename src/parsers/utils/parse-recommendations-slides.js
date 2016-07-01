@@ -2,7 +2,7 @@
  * @param {string} type - `anime` or `manga`
  * @return {object}
  */
-export default function ParseRecommendationsSlides(type = 'anime') {
+export default function parseRecommendationsSlides(type = 'anime') {
 	return {
 		listItem: `#${type}_recommendation li`,
 		data: {
