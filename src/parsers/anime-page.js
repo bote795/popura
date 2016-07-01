@@ -2,6 +2,7 @@ import parseSidebarData from './utils/parse-sidebar-data';
 import parseRelatedMedia from './utils/parse-related-media';
 import parsePeopleList from './utils/parse-people-list';
 import parseReviewsList from './utils/parse-reviews-list';
+import parseRecommendationsSlides from './utils/parse-recommendations-slides';
 
 const animePageParser = {
 	title: 'h1',
@@ -26,6 +27,8 @@ const animePageParser = {
 	staff: parsePeopleList('Staff', 'Opening Theme'),
 
 	reviews: parseReviewsList('Reviews', 'Recommendations'),
+
+	recommendations: parseRecommendationsSlides(),
 };
 
 export default animePageParser;
