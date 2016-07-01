@@ -3,6 +3,7 @@ import cheerio from 'cheerio';
 const isLinkTag = /^<a(.*)<\/a>/;
 const commonRegex = /(anime|manga|producer|character|people|genre)\/(\d+)/;
 const seasonRegex = /season\/(\d+)\/(winter|spring|summer|fall)/;
+const profileRegex = /profile\/([\d\w-_]+)/;
 const matchTitleInsideLink = /(\d+)\/(.*)/;
 
 /**
@@ -59,6 +60,10 @@ export default function parseLink(str) {
 		}
 
 		return {type: 'season', year: Number(year), season, title};
+	} else if (profileRegex.test(href)) {
+		const [, username] = href.match(profileRegex);
+
+		return {type: 'profile', username};
 	}
 
 	return str;

@@ -8,6 +8,7 @@ const producerLinkTag = `<a href="/anime/producer/287/David_Production" title="D
 const peopleLinkTag = `<a href="/people/15107/Tsuda_Naokatsu">Tsuda, Naokatsu</a>`;
 const seasonLinkTag = `<a href="http://myanimelist.net/anime/season/2016/spring">Spring 2016</a>`;
 const genreLinkTag = `<a href="/anime/genre/8/Drama" title="Drama">Drama</a>`;
+const profileLinkTag = `<a href="/profile/lubien">lubien</a>`;
 
 test('Parse link tags in MAL', t => {
 	t.deepEqual(parseLink(animeLinkTag), {
@@ -51,6 +52,11 @@ test('Parse link tags in MAL', t => {
 		type: 'genre',
 		id: 8,
 		title: 'Drama',
+	});
+
+	t.deepEqual(parseLink(profileLinkTag), {
+		type: 'profile',
+		username: 'lubien',
 	});
 });
 
