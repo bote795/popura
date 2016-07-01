@@ -1,6 +1,7 @@
 import parseSidebarData from './utils/parse-sidebar-data';
 import parseRelatedMedia from './utils/parse-related-media';
 import parsePeopleList from './utils/parse-people-list';
+import parseReviewsList from './utils/parse-reviews-list';
 
 const animePageParser = {
 	title: 'h1',
@@ -23,6 +24,8 @@ const animePageParser = {
 	characters: parsePeopleList('Voice Actors', 'Staff', true),
 
 	staff: parsePeopleList('Staff', 'Opening Theme'),
+
+	reviews: parseReviewsList('Reviews', 'Recommendations'),
 };
 
 export default animePageParser;
