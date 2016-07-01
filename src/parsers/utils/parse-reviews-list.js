@@ -1,6 +1,13 @@
 import cheerio from 'cheerio';
 import parseLink from './parse-link';
 
+/**
+ * Parse reviews from `start` to `end`
+ *
+ * @param  {string} start - Where to start parsing
+ * @param  {string} until - Stop parsing before `until`
+ * @return {array} - Array of reviews
+ */
 export default function parseReviewsList(start, until) {
 	return {
 		selector: '.pb24',

@@ -4,9 +4,9 @@ import parseLink from './parse-link';
 /**
  * Parse 'Characters & Voice Actors' and 'Staff' sections
  *
- * @param  {type} start - Where to start parsing
- * @param  {type} until - Stop parsing before `until`
- * @param  {type} isParsingChars - True if parsing `Characters & Voice Actors`
+ * @param  {string} start - Where to start parsing
+ * @param  {string} until - Stop parsing before `until`
+ * @param  {bool} isParsingChars - True if parsing `Characters & Voice Actors`
  * @return {array} - Array of character/people link models
  */
 export default function parsePeopleList(start, until, isParsingChars) {
