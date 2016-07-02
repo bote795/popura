@@ -33,6 +33,7 @@ export default function parseSidebarData(start, until) {
 				.map(line => line.trim());
 
 			for (let [index, line] of lines.entries()) {
+				console.log(line)
 				// Try to match `Something:`
 				const matchedName = line.match(/>(\w+):</);
 				const propName = Array.isArray(matchedName) ?
