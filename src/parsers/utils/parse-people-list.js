@@ -1,5 +1,5 @@
 import cheerio from 'cheerio';
-import people from '../element/people';
+import parsePerson from '../element/person';
 
 /**
  * Parse 'Characters & Voice Actors' and 'Staff' sections
@@ -25,7 +25,7 @@ export default function parsePeopleList(start, until, isParsingChars) {
 				$('tr');
 
 			return selector
-				.map((_, node) => people(cheerio.load(node), isParsingChars))
+				.map((_, person) => parsePerson(cheerio.load(person), isParsingChars))
 				.get();
 		},
 	};

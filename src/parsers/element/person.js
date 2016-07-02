@@ -5,7 +5,7 @@ import parseLink from '../utils/parse-link';
  * @param {bool} isChar - True if is parrsing a character. Needed since chars have seiyuus
  * @return {object}
  */
-export default function parsePeople($, isChar) {
+export default function parsePerson($, isChar) {
 	const tds = $('td');
 
 	const person = parseLink($.html(
