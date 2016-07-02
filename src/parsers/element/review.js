@@ -10,18 +10,20 @@ export default function parseReview($) {
 		.eq(0)
 		.find('td');
 
-	const user = parseLink($.html(
+	const review = {};
+
+	review.user = parseLink($.html(
 		metaCols
 			.eq(1)
 			.find('a')
 			.eq(0)
 	));
-	user.image = metaCols
+	review.user.image = metaCols
 		.eq(0)
 		.find('img')
 		.attr('data-src');
 
-	const useful = Number(
+	review.useful = Number(
 		metaCols
 			.eq(1)
 			.children('div')
@@ -30,7 +32,7 @@ export default function parseReview($) {
 			.text()
 	);
 
-	const date = metaCols
+	review.date = metaCols
 		.eq(2)
 		.find('div')
 		.eq(0)
@@ -43,7 +45,12 @@ export default function parseReview($) {
 		.text()
 		.match(/(\d+) of (\d+)/);
 
-	const rating = childDivs
+	review.seen = {
+		current: seen,
+		total: totalToSee,
+	};
+
+	review.rating = childDivs
 		.eq(1)
 		.find('tr')
 		.map((_, rateTr) => {
@@ -71,18 +78,8 @@ export default function parseReview($) {
 	const textDiv = childDivs.eq(1);
 	textDiv.find('div').remove();
 	textDiv.find('a').remove();
-	const text = textDiv.text();
+	review.text = textDiv.text();
 
-	return {
-		user,
-		useful,
-		rating,
-		date,
-		text,
-		seen: {
-			current: seen,
-			total: totalToSee,
-		},
-	};
+	return review;
 }
 
