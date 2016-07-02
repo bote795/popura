@@ -6,10 +6,10 @@ import parsePerson from '../element/person';
  *
  * @param  {string} start - Where to start parsing
  * @param  {string} until - Stop parsing before `until`
- * @param  {bool} isParsingChars - True if parsing `Characters & Voice Actors`
+ * @param  {bool} isChar - True if parsing `Characters & Voice Actors`
  * @return {array} - Array of character/people link models
  */
-export default function parsePeopleList(start, until, isParsingChars) {
+export default function parsePeopleList(start, until, isChar) {
 	return {
 		selector: '.pb24',
 		how: 'html',
@@ -19,13 +19,13 @@ export default function parsePeopleList(start, until, isParsingChars) {
 
 			// 'Characters & Voice Actors' is a `table of tables` while
 			// 'Staff' is a single table
-			const selector = isParsingChars ?
+			const selector = isChar ?
 				// You must be careful to not recursively select tables
 				$.root().children('table').children('tr') :
 				$('tr');
 
 			return selector
-				.map((_, person) => parsePerson(cheerio.load(person), isParsingChars))
+				.map((_, person) => parsePerson(cheerio.load(person), isChar))
 				.get();
 		},
 	};
